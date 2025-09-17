@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> My Badges </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    
+    <style>
+        body {
+            background-color: #121212;
+            font-family: 'Arial', sans-serif;
+            color: #e0e0e0;
+            padding-top: 40px;
+        }
+        
+        .navbar {
+            background-color: #1f1f1f;
+            border-bottom: 1px solid #333;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e0e0e0 !important;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: #42a5f5 !important;
+        }
+
+        .nav-link {
+            color: #e0e0e0 !important;
+            font-size: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin: 3px;
+        }
+
+        .nav-link:hover {
+            color: #64ffda !important;
+            transform: scale(1.1);
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28224, 224, 224, 0.7%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .dropdown-menu {
+            background-color: #1f1f1f;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .dropdown-item {
+            color: #e0e0e0;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #333;
+            color: #ffffff;
+        }
+
+        .navbar-center {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar-brand-logo {
+            height: 35px;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+        .post-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .card {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1rem;
+            }
+
+            .nav-link {
+                font-size: 0.8rem;
+            }
+            .navbar-brand-logo {
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                Workout App
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_profile' %}">My Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_badges' %}">My Badges</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'forum' %}">Forum</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'nutritional_guidance' %}">Nutrition</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'motivation' %}">Motivations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'workout_routines' %}">Workout Routines</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="progressTrackerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Progress Tracker
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="progressTrackerDropdown">
+                                <li><a class="dropdown-item" href="{% url 'dietary_intake' %}">Dietary Intake</a></li>
+                                <li><a class="dropdown-item" href="{% url 'workout' %}">Workout</a></li>
+                                <li><a class="dropdown-item" href="{% url 'body_metric' %}">Body Metric</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'forum' %}">Forum</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'nutritional_guidance' %}">Nutrition</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'motivation' %}">Motivations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'workout_routines' %}">Workout Routines</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="text-center text-light mb-4">🏅 My Badges 🏅</h2>
+    
+        <!-- ✅ Section for UNLOCKED Badges -->
+        <h3 class="text-light text-center">Unlocked Badges</h3>
+        <div class="row">
+            {% for user_badge in unlocked_badges %} 
+                <div class="col-md-4">
+                    <div class="card bg-success text-light mb-3">
+                        <div class="card-body text-center"> 
+                            <img src="{{ user_badge.badge.image.url }}" alt="{{ user_badge.badge.name }}" class="img-fluid" style="max-width: 100px;">  <!-- Display badge name and description -->
+                            <h4>{{ user_badge.badge.name }}</h4>
+                            <p>{{ user_badge.badge.description }}</p> 
+                            <p class="text-success text-info">✅ Unlocked!</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %} 
+                <p class="text-center text-warning">No unlocked badges yet. Keep going! 💪</p>
+            {% endfor %}
+        </div>
+    
+        <hr class="text-light my-4">
+    
+        <!-- ❌ Section for LOCKED Badges -->
+        <h3 class="text-light text-center">Locked Badges</h3>
+        <div class="row">
+            {% for badge in locked_badges %} 
+                <div class="col-md-4">
+                    <div class="card bg-secondary text-light mb-3">
+                        <div class="card-body text-center">
+                            <img src="{{ badge.image.url }}" alt="{{ badge.name }}" class="img-fluid" style="max-width: 100px; opacity: 0.5;"> 
+                            <h4>{{ badge.name }}</h4>
+                            <p>{{ badge.description }}</p>
+                            <p class="text-muted mt-2">Keep going! 🔥</p> 
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-warning">You've unlocked all badges! 🎉</p> 
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

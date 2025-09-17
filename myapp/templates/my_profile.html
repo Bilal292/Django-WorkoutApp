@@ -1,0 +1,377 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index - Forum </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    
+    <style>
+        body {
+            background-color: #121212;
+            font-family: 'Arial', sans-serif;
+            color: #e0e0e0;
+            padding-top: 40px;
+        }
+        
+        .navbar {
+            background-color: #1f1f1f;
+            border-bottom: 1px solid #333;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e0e0e0 !important;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: #42a5f5 !important;
+        }
+
+        .nav-link {
+            color: #e0e0e0 !important;
+            font-size: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin: 3px;
+        }
+
+        .nav-link:hover {
+            color: #64ffda !important;
+            transform: scale(1.1);
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28224, 224, 224, 0.7%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .dropdown-menu {
+            background-color: #1f1f1f;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .dropdown-item {
+            color: #e0e0e0;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #333;
+            color: #ffffff;
+        }
+
+        .navbar-center {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar-brand-logo {
+            height: 35px;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+        .post-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .badge-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            background-color: #1f1f1f;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            width: 100px;
+            text-align: center;
+        }
+    
+        .badge-card .badge-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
+    
+        .badge-card p {
+            font-size: 14px;
+            color: #e0e0e0;
+            margin: 0;
+        }
+    
+        /* Styling for Cards */
+        .card {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            color: white;
+        }
+    
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    
+        .card-text {
+            font-size: 1rem;
+            color: #e0e0e0;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1rem;
+            }
+
+            .nav-link {
+                font-size: 0.8rem;
+            }
+            .navbar-brand-logo {
+                height: 30px;
+            }
+            .badge-card {
+                width: 80px;
+            }
+    
+            .badge-card .badge-image {
+                width: 50px;
+                height: 50px;
+            }
+    
+            .card-title {
+                font-size: 1rem;
+            }
+    
+            .card-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                Workout App
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_profile' %}">My Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_badges' %}">My Badges</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'forum' %}">Forum</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'nutritional_guidance' %}">Nutrition</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'motivation' %}">Motivations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'workout_routines' %}">Workout Routines</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="progressTrackerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Progress Tracker
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="progressTrackerDropdown">
+                                <li><a class="dropdown-item" href="{% url 'dietary_intake' %}">Dietary Intake</a></li>
+                                <li><a class="dropdown-item" href="{% url 'workout' %}">Workout</a></li>
+                                <li><a class="dropdown-item" href="{% url 'body_metric' %}">Body Metric</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'forum' %}">Forum</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'nutritional_guidance' %}">Nutrition</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'motivation' %}">Motivations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'workout_routines' %}">Workout Routines</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+
+        <!-- Welcome Message -->
+        <h2 class="text-center text-light mb-4">Welcome, {{ user.username }}!</h2>
+    
+        <!-- Workout Stats, Dietary Intake, and Body Metrics -->
+        <div class="row g-4">
+            <!-- Workout Stats -->
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Workout Stats</h5>
+                        <p class="card-text">Total Workouts Completed: <strong>{{ total_workouts }}</strong></p>
+                        {% if recent_workout %}
+                            <p class="card-text">Most Recent Workout: <strong>{{ recent_workout.date }} ({{ recent_workout.type }})</strong></p>
+                        {% endif %}
+                        <p class="card-text">Total Calories Burned: <strong>{{ calories_burned }}</strong></p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Dietary Intake Stats -->
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Today's Tracked Nutrition</h5>
+                        <p class="card-text">Total Calories: <strong>{{ dietary_today.total_calories|default:"0" }}</strong></p>
+                        <p class="card-text">Total Protein: <strong>{{ dietary_today.total_protein|default:"0" }}g</strong></p>
+                        <p class="card-text">Total Carbs: <strong>{{ dietary_today.total_carbs|default:"0" }}g</strong></p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Body Metrics -->
+            {% if recent_body_metrics %}
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Body Metrics - {{ recent_body_metrics.date }}</h5>
+                        <p class="card-text">Weight: <strong>{{ recent_body_metrics.weight }} kg</strong></p>
+                        <p class="card-text">Height: <strong>{{ recent_body_metrics.height }} cm</strong></p>
+                        <p class="card-text">BMI: <strong>{{ recent_body_metrics.bmi }}</strong></p>
+                        <p class="card-text">Body Fat %: <strong>{{ recent_body_metrics.body_fat_percentage }}%</strong></p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    
+        <!-- Unlocked Badges -->
+        {% if unlocked_badges %}
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">🏅 Unlocked Badges</h5>
+                        <div class="d-flex flex-wrap gap-3">
+                            {% for badge in unlocked_badges %}
+                                <div class="badge-card">
+                                    <img src="{{ badge.badge.image.url }}" alt="{{ badge.badge.name }}" class="badge-image" />
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    
+        <!-- Locked Badges -->
+        {% if locked_badges %}
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">🔒 Locked Badges</h5>
+                        <div class="d-flex flex-wrap gap-3">
+                            {% for badge in locked_badges %}
+                                <div class="badge-card" style="opacity: 0.5;">
+                                    <img src="{{ badge.badge.image.url }}" alt="{{ badge.badge.name }}" class="badge-image" />
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <br>
+        <h3 class="text-center text-light mb-4"> My Posts </h3>
+        <!-- User Posts -->
+        <div class="row mt-4 g-4">
+            {% for post in user_posts %}
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <!-- Post Title and Delete Button -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{% url 'post_detail' post.id %}" class="navbar-brand">
+                                    {{ post.title }}
+                                </a>
+                                {% if post.user == request.user %}
+                                    <form action="{% url 'delete_post' post.id %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            🗑️
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </div>
+    
+                            <!-- Post Meta Info -->
+                            <p class="text-muted" style="color: white !important; font-size: 0.8rem !important;">
+                                Posted by: {{ post.user.username }} - {{ post.created_at|date:"F d, Y" }}
+                            </p>
+                            
+                            <hr>
+                            
+                            <!-- Post Content -->
+                            <p class="card-text">{{ post.content|truncatewords:50 }}</p>
+                            
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" class="img-fluid mt-2 rounded" alt="{{ post.title }}">
+                            {% endif %}
+                            
+                            <p class="mt-2 text-white">
+                                <strong> Likes:</strong> {{ post.total_likes }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-light">You haven't created any posts yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <br>
+
+</body>
+</html>

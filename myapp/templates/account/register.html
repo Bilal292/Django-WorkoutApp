@@ -1,0 +1,302 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - My Website</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    
+    <style>
+        body {
+            background-color: #121212;
+            font-family: 'Arial', sans-serif;
+            color: #e0e0e0;
+            padding-top: 40px;
+        }
+        
+        .navbar {
+            background-color: #1f1f1f;
+            border-bottom: 1px solid #333;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e0e0e0 !important;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: #42a5f5 !important;
+        }
+
+        .nav-link {
+            color: #e0e0e0 !important;
+            font-size: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin: 3px;
+        }
+
+        .nav-link:hover {
+            color: #64ffda !important;
+            transform: scale(1.1);
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28224, 224, 224, 0.7%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .dropdown-menu {
+            background-color: #1f1f1f;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .dropdown-item {
+            color: #e0e0e0;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #333;
+            color: #ffffff;
+        }
+
+        .navbar-center {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .token-info {
+            color: #fff;
+            font-size: 1rem;
+            background-color: #2b2b2b;
+            padding: 5px 10px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .navbar-brand-logo {
+            height: 35px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1rem;
+            }
+
+            .token-info {
+                font-size: 0.8rem;
+                padding: 4px 7px;
+            }
+            .nav-link {
+                font-size: 0.8rem;
+            }
+            .navbar-brand-logo {
+                height: 30px;
+            }
+        }
+    </style>
+    
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+    
+        .row.justify-content-center {}
+    
+        .card {
+            background: #1f1f1f; /* Matches navbar background */
+            border: 1px solid #333; /* Subtle border for definition */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+    
+        .card h2 {
+            font-weight: 700;
+            color: #e0e0e0; /* Matches the main text color */
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+    
+        /* Form Group */
+        .form-group {
+            margin-bottom: 20px;
+        }
+    
+        .form-control {
+            border-radius: 30px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 1px solid #444; /* Subtle border to blend */
+            background-color: #2b2b2b; /* Slightly lighter than the card */
+            color: #e0e0e0; /* Main text color */
+            transition: all 0.3s ease;
+        }
+    
+        .form-control:focus {
+            border-color: #64ffda; /* Matches hover color for links */
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.4); /* Glow effect */
+        }
+    
+        .form-control::placeholder {
+            color: #888; /* Subtle placeholder text */
+        }
+    
+        .btn-primary {
+            background-color: #42a5f5; /* Matches navbar-brand hover */
+            border-color: #42a5f5;
+            color: #1f1f1f; /* Contrast text */
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+    
+        .btn-primary:hover {
+            background-color: #64ffda; /* Matches nav-link hover */
+            border-color: #64ffda;
+            transform: scale(1.05);
+        }
+    
+        .btn-primary:active {
+            background-color: #42a5f5; /* Slightly darker active state */
+            border-color: #42a5f5;
+        }
+        .helptext {
+            color: white;
+        }
+    
+        @media (max-width: 767px) {
+            .col-md-6 {
+                width: 90%;
+            }
+        }
+    </style>
+    
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">  
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"> 
+                Workout App
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %} 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg p-4 rounded-3"> 
+                    <h2 class="text-center mb-4 text-light">Create Account</h2>
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li> 
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+
+                    <form method="post"> 
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="id_username" class="text-light">Username:</label>
+                            <input type="text" name="username" maxlength="150" autofocus required id="id_username" class="form-control" placeholder="Enter your username">
+                            {% if form.username.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.username.errors %} 
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_email" class="text-light">Email:</label>
+                            <input type="email" name="email" maxlength="320" id="id_email" class="form-control" placeholder="Enter your email">
+                            {% if form.email.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.email.errors %}
+                                        <p>{{ error }}</p> 
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_password1" class="text-light">Password:</label>
+                            <input type="password" name="password1" autocomplete="new-password" required id="id_password1" class="form-control" placeholder="Enter your password">
+                            <span class="helptext">- Your password must be at least 8 characters long.</span> 
+                            {% if form.password1.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.password1.errors %} 
+                                        <p>{{ error }}</p> 
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_password2" class="text-light">Confirm Password:</label>
+                            <input type="password" name="password2" autocomplete="new-password" required id="id_password2" class="form-control" placeholder="Confirm your password">
+                            <span class="helptext">- Enter the same password as before for verification.</span> 
+                            {% if form.password2.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.password2.errors %}
+                                        <p>{{ error }}</p> 
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Create</button> 
+                        </div>
+                    </form>
+
+                    <br>
+                    <h6 class="text-center mb-4 text-light">Already Have An Account?</h6> 
+                    <div class="d-grid">
+                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+</body>
+</html>
